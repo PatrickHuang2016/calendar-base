@@ -5,11 +5,18 @@ import { AppService } from './app.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { EventsModule } from './events/events.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
+import { CommentsModule } from './comments/comments.module.js';
+import { AttachmentsModule } from './attachments/attachments.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
 @Module({
   imports: [
+    PrismaModule,
+    EventsModule,
+    TasksModule,
+    CommentsModule,
+    AttachmentsModule,
     // Distributed tracing, auto-correlated logs, request/job metrics, error
     // telemetry, alarms, and more — out of the box. Sign up at https://observe.nestjs.com
     ObserveModule.forRoot({
