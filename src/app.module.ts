@@ -7,6 +7,7 @@ import { EventsModule } from './events/events.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
 import { CommentsModule } from './comments/comments.module.js';
 import { AttachmentsModule } from './attachments/attachments.module.js';
+import { McpModule } from './mcp/mcp.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -17,6 +18,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     TasksModule,
     CommentsModule,
     AttachmentsModule,
+    McpModule,
     // Distributed tracing, auto-correlated logs, request/job metrics, error
     // telemetry, alarms, and more — out of the box. Sign up at https://observe.nestjs.com
     ObserveModule.forRoot({
