@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  username  String
+  createdAt DateTime @default(now())
+
+  // Relations
+  createdEvents      Event[]           @relation("EventCreator")
+  assignedLogs       EventAssignment[] @relation("EventAssignee")
+  delayedTasks       DelayedTaskQueue[] @relation("DelayedTaskAssignee")
+  comments           Comment[]
+}
+
+model Event {
+  id          String   @id @default(uuid()) @db.Uuid
+  creatorId   String   @db.Uuid
+  title       String
+  description String?
+  rrule       String?  // Recurrence rule
+  createdAt   DateTime @default(now())
+
+  creator     User     @relation("EventCreator", fields: [creatorId], references: [id])
+  
+  // Relations
+  assignments EventAssignment[]
+  delayedQueue DelayedTaskQueue[]
+  comments    Comment[]
+  attachments Attachment[]
+  reminders   Reminder[]
+}
+
+model DelayedTaskQueue {
+  id             String   @id @default(uuid()) @db.Uuid
+  eventId        String   @db.Uuid
+  assigneeId     String   @db.Uuid
+  originalDate   DateTime @db.Date
+  targetDate     DateTime @db.Date
+  overrideData   Json?    @db.JsonB
+  createdAt      DateTime @default(now())
+
+  event          Event    @relation(fields: [eventId], references: [id])
+  assignee       User     @relation("DelayedTaskAssignee", fields: [assigneeId], references: [id])
+}
+
+model EventAssignment {
+  id                   String   @id @default(uuid()) @db.Uuid
+  eventId              String   @db.Uuid
+  assigneeId           String   @db.Uuid
+  occurrenceDate       DateTime @db.Date
+  status               String   // completed, skipped
+  isDelayedCompletion  Boolean  @default(false)
+  createdAt            DateTime @default(now())
+
+  event                Event    @relation(fields: [eventId], references: [id])
+  assignee             User     @relation("EventAssignee", fields: [assigneeId], references: [id])
+}
+
+model Comment {
+  id             String   @id @default(uuid()) @db.Uuid
+  eventId        String   @db.Uuid
+  occurrenceDate DateTime @db.Date
+  userId         String   @db.Uuid
+  content        String
+  createdAt      DateTime @default(now())
+
+  event          Event    @relation(fields: [eventId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+model Attachment {
+  id             String    @id @default(uuid()) @db.Uuid
+  eventId        String    @db.Uuid
+  occurrenceDate DateTime? @db.Date
+  fileUrl        String
+  createdAt      DateTime  @default(now())
+
+  event          Event     @relation(fields: [eventId], references: [id])
+}
+
+model Reminder {
+  id            String   @id @default(uuid()) @db.Uuid
+  eventId       String   @db.Uuid
+  minutesBefore Int
+  createdAt     DateTime @default(now())
+
+  event         Event    @relation(fields: [eventId], references: [id])
+}
