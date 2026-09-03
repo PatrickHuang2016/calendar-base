@@ -15,11 +15,19 @@ export default async function handler(req: any, res: any) {
       .addBearerAuth()
       .build();
     const documentFactory = () => SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api-docs', app, documentFactory);
+    const customOptions = {
+      customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui.min.css',
+      customJs: [
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui-bundle.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui-standalone-preset.js',
+      ],
+    };
+    SwaggerModule.setup('api-docs', app, documentFactory, customOptions);
 
     await app.init();
     cachedServer = app.getHttpAdapter().getInstance();
   }
   return cachedServer(req, res);
 }
+
 
