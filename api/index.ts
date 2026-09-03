@@ -1,14 +1,13 @@
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from '../src/app.module.js';
-import type { Express } from 'express';
+let cachedServer: any;
 
-let cachedServer: Express;
-
-async function bootstrapServer(): Promise<Express> {
+export default async function handler(req: any, res: any) {
   if (!cachedServer) {
+    const { NestFactory } = await import('@nestjs/core');
+    const { DocumentBuilder, SwaggerModule } = await import('@nestjs/swagger');
+    const { AppModule } = await import('../src/app.module.js');
+
     const app = await NestFactory.create(AppModule);
-    
+
     const config = new DocumentBuilder()
       .setTitle('ScheduleBase API')
       .setDescription('ScheduleBase 后端 RESTful API 接口文档')
@@ -21,10 +20,6 @@ async function bootstrapServer(): Promise<Express> {
     await app.init();
     cachedServer = app.getHttpAdapter().getInstance();
   }
-  return cachedServer;
+  return cachedServer(req, res);
 }
 
-export default async function handler(req: any, res: any) {
-  const server = await bootstrapServer();
-  server(req, res);
-}
