@@ -1,15 +1,22 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateEventDto {
+  @ApiPropertyOptional({ description: '接入方应用ID / App ID', example: 'app_a1b2c3d4-e5f6-7890' })
+  appId?: string;
+
   @ApiProperty({ description: '创建者用户ID', example: 'user_123' })
   creatorId!: string;
 
   @ApiProperty({ description: '日程/事件标题', example: '团队每周例会' })
   title!: string;
 
+  @ApiPropertyOptional({ description: '日程/事件详细描述', example: '讨论下一季度的路线图与关键里程碑' })
+  description?: string;
+
   @ApiPropertyOptional({ description: 'RRule 重复规则字符串 (如: FREQ=WEEKLY;BYDAY=MO)', example: 'FREQ=WEEKLY;BYDAY=MO' })
   rrule?: string;
 }
+
 
 export class DelayTaskDto {
   @ApiProperty({ description: '事件ID', example: 'evt_123' })

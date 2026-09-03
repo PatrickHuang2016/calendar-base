@@ -6,26 +6,31 @@ import { PrismaService } from '../prisma/prisma.service.js';
 export class EventsService {
   constructor(private prisma: PrismaService) {}
 
-  async createEvent(data: { creatorId: string, title: string, rrule?: string }) {
+  async createEvent(data: { appId?: string, creatorId: string, title: string, description?: string, rrule?: string }) {
     return this.prisma.event.create({
       data: {
+        appId: data.appId,
         creatorId: data.creatorId,
         title: data.title,
+        description: data.description,
         rrule: data.rrule,
       }
     });
   }
 
-  async getEvents(creatorId?: string) {
-
+  async getEvents(creatorId?: string, appId?: string) {
     return this.prisma.event.findMany({
-      where: creatorId ? { creatorId } : {},
+      where: {
+        ...(creatorId ? { creatorId } : {}),
+        ...(appId ? { appId } : {}),
+      },
       include: {
-        assignees: true,
+        assignments: true,
         comments: true,
         attachments: true,
       },
     });
   }
 }
+
 

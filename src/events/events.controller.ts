@@ -11,9 +11,11 @@ export class EventsController {
   @Get()
   @ApiOperation({ summary: '获取日程/事件列表' })
   @ApiQuery({ name: 'creatorId', required: false, description: '创建者用户ID' })
-  async getEvents(@Query('creatorId') creatorId?: string) {
-    return this.eventsService.getEvents(creatorId);
+  @ApiQuery({ name: 'appId', required: false, description: '接入应用的 App ID' })
+  async getEvents(@Query('creatorId') creatorId?: string, @Query('appId') appId?: string) {
+    return this.eventsService.getEvents(creatorId, appId);
   }
+
 
   @Post()
   @ApiOperation({ summary: '创建日程/事件' })

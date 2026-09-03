@@ -28,6 +28,7 @@ model User {
 
 model Event {
   id          String   @id @default(uuid()) @db.Uuid
+  appId       String?  @db.Uuid // 接入应用的 APP ID / API Key 归属标识
   creatorId   String   @db.Uuid
   title       String
   description String?
@@ -35,6 +36,7 @@ model Event {
   createdAt   DateTime @default(now())
 
   creator     User     @relation("EventCreator", fields: [creatorId], references: [id])
+
   
   // Relations
   assignments EventAssignment[]
