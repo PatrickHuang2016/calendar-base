@@ -6,8 +6,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "npx prisma generate && nest build",
-    "deploy": "nest deploy",
+    "build": "npx prisma generate",
+    "vercel-build": "npx prisma generate",
+
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
