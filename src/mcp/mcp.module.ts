@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { McpController } from './mcp.controller';
-import { McpService } from './mcp.service';
-import { TasksModule } from '../tasks/tasks.module';
+import { McpController } from './mcp.controller.js';
+import { McpService } from './mcp.service.js';
+import { TasksModule } from '../tasks/tasks.module.js';
+
 
 @Module({
   imports: [TasksModule], // We need TasksService

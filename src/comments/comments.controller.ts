@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
-import { CommentsService } from './comments.service';
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import { CommentsService } from './comments.service.js';
 
 @Controller('comments')
 export class CommentsController {

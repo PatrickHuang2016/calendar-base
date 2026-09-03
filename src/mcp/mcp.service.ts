@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
-import { TasksService } from '../tasks/tasks.service';
+import { TasksService } from '../tasks/tasks.service.js';
 import { z } from 'zod';
 
 @Injectable()

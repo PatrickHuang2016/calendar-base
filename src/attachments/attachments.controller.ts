@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Get, Query } from '@nestjs/common';
-import { AttachmentsService } from './attachments.service';
+import { AttachmentsService } from './attachments.service.js';
+
 
 @Controller('attachments')
 export class AttachmentsController {
