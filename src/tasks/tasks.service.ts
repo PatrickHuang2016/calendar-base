@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { RRule, rrulestr } from 'rrule';
+import pkg from 'rrule';
+const { RRule, rrulestr } = pkg;
+
 import { DateTime } from 'luxon';
 
 @Injectable()
