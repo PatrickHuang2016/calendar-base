@@ -1,6 +1,7 @@
 import { Controller, Post, Get, Query, Body } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { EventsService } from './events.service.js';
+import { CreateEventDto } from '../dto/api.dto.js';
 
 @ApiTags('Events')
 @Controller('events')
@@ -16,9 +17,11 @@ export class EventsController {
 
   @Post()
   @ApiOperation({ summary: '创建日程/事件' })
-  async createEvent(@Body() createEventDto: any) {
+  @ApiBody({ type: CreateEventDto })
+  async createEvent(@Body() createEventDto: CreateEventDto) {
     return this.eventsService.createEvent(createEventDto);
   }
 }
+
 
 

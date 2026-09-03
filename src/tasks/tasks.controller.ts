@@ -1,6 +1,7 @@
 import { Controller, Get, Query, Post, Body } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { TasksService } from './tasks.service.js';
+import { DelayTaskDto, CompleteTaskDto } from '../dto/api.dto.js';
 
 @ApiTags('Tasks')
 @Controller('tasks')
@@ -17,14 +18,17 @@ export class TasksController {
 
   @Post('delay')
   @ApiOperation({ summary: '延期任务' })
-  async delayTask(@Body() body: { eventId: string, assigneeId: string, originalDate: string, targetDate: string }) {
+  @ApiBody({ type: DelayTaskDto })
+  async delayTask(@Body() body: DelayTaskDto) {
     return this.tasksService.delayTask(body.eventId, body.assigneeId, new Date(body.originalDate), new Date(body.targetDate));
   }
 
   @Post('complete')
   @ApiOperation({ summary: '完成任务' })
-  async completeTask(@Body() body: { eventId: string, assigneeId: string, occurrenceDate: string, isDelayed: boolean }) {
+  @ApiBody({ type: CompleteTaskDto })
+  async completeTask(@Body() body: CompleteTaskDto) {
     return this.tasksService.completeTask(body.eventId, body.assigneeId, new Date(body.occurrenceDate), body.isDelayed);
   }
 }
+
 
