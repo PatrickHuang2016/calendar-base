@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { McpController } from './mcp.controller.js';
 import { McpService } from './mcp.service.js';
-import { TasksModule } from '../tasks/tasks.module.js';
-
+import { TasksService } from '../tasks/tasks.service.js';
+import { PrismaService } from '../prisma/prisma.service.js';
 
 @Module({
-  imports: [TasksModule], // We need TasksService
   controllers: [McpController],
-  providers: [McpService],
+  providers: [McpService, TasksService, PrismaService],
 })
 export class McpModule {}
+
