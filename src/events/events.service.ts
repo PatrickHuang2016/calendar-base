@@ -15,4 +15,17 @@ export class EventsService {
       }
     });
   }
+
+  async getEvents(creatorId?: string) {
+
+    return this.prisma.event.findMany({
+      where: creatorId ? { creatorId } : {},
+      include: {
+        assignees: true,
+        comments: true,
+        attachments: true,
+      },
+    });
+  }
 }
+

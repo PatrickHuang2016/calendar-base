@@ -1,5 +1,5 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Post, Get, Query, Body } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { EventsService } from './events.service.js';
 
 @ApiTags('Events')
@@ -7,10 +7,18 @@ import { EventsService } from './events.service.js';
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
+  @Get()
+  @ApiOperation({ summary: '获取日程/事件列表' })
+  @ApiQuery({ name: 'creatorId', required: false, description: '创建者用户ID' })
+  async getEvents(@Query('creatorId') creatorId?: string) {
+    return this.eventsService.getEvents(creatorId);
+  }
+
   @Post()
   @ApiOperation({ summary: '创建日程/事件' })
   async createEvent(@Body() createEventDto: any) {
     return this.eventsService.createEvent(createEventDto);
   }
 }
+
 
