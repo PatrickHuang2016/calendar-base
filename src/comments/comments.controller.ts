@@ -14,11 +14,12 @@ export class CommentsController {
   async addComment(@Body() body: CreateCommentDto) {
     return this.commentsService.addComment(
       body.eventId,
-      new Date(),
-      body.authorId,
+      new Date(body.occurrenceDate),
+      body.userId,
       body.content
     );
   }
+
 
   @Get()
   @ApiOperation({ summary: '获取评论列表' })

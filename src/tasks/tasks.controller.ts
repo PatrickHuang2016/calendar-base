@@ -27,8 +27,9 @@ export class TasksController {
   @ApiOperation({ summary: '完成任务' })
   @ApiBody({ type: CompleteTaskDto })
   async completeTask(@Body() body: CompleteTaskDto) {
-    return this.tasksService.completeTask(body.eventId, body.assigneeId, new Date(body.occurrenceDate), body.isDelayed);
+    return this.tasksService.completeTask(body.eventId, body.assigneeId, new Date(body.occurrenceDate), body.isDelayed ?? false);
   }
+
 }
 
 

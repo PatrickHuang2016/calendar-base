@@ -12,8 +12,10 @@ export class AttachmentsController {
   @ApiOperation({ summary: '添加附件' })
   @ApiBody({ type: CreateAttachmentDto })
   async addAttachment(@Body() body: CreateAttachmentDto) {
-    return this.attachmentsService.addAttachment(body.eventId, null, body.url);
+    const date = body.occurrenceDate ? new Date(body.occurrenceDate) : null;
+    return this.attachmentsService.addAttachment(body.eventId, date, body.fileUrl);
   }
+
 
   @Get()
   @ApiOperation({ summary: '获取附件列表' })
