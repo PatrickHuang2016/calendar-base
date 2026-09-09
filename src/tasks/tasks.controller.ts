@@ -1,8 +1,9 @@
 import { Controller, Get, Query, Post, Body } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { ApiOperation, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiQuery, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Tasks (日常待办管理)')
+@ApiBearerAuth()
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}

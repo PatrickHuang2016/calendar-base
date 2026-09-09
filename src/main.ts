@@ -11,6 +11,7 @@ async function bootstrap() {
     .setTitle('ScheduleBase API')
     .setDescription('ScheduleBase 后端 RESTful API 接口文档')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, documentFactory);

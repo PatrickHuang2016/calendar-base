@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { ApiOperation, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiQuery, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Comments (任务留言与打卡记录)')
+@ApiBearerAuth()
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}

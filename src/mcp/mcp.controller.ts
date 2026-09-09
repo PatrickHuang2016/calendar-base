@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { McpService } from './mcp.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('MCP Server (AI Agent 通信接口)')
+@ApiBearerAuth()
 @Controller('mcp')
 export class McpController {
   constructor(private readonly mcpService: McpService) {}

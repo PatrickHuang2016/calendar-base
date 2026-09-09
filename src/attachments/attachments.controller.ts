@@ -1,8 +1,9 @@
 import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { AttachmentsService } from './attachments.service';
-import { ApiOperation, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiQuery, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Attachments (任务附件)')
+@ApiBearerAuth()
 @Controller('attachments')
 export class AttachmentsController {
   constructor(private readonly attachmentsService: AttachmentsService) {}

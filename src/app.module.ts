@@ -8,12 +8,14 @@ import { TasksModule } from './tasks/tasks.module.js';
 import { CommentsModule } from './comments/comments.module.js';
 import { AttachmentsModule } from './attachments/attachments.module.js';
 import { McpModule } from './mcp/mcp.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
 @Module({
   imports: [
     PrismaModule,
+    AuthModule,
     EventsModule,
     TasksModule,
     CommentsModule,
